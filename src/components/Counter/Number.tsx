@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
+import {Theme} from '../../styles/Themes';
 
 type NumberProps = {
     counter: number
@@ -12,13 +13,15 @@ export const Number = ({counter, stopVal}: NumberProps) => {
     );
 };
 
-const StyledCounterNumber=styled.h2`
-    color: #ea88d6;
+const StyledCounterNumber=styled.h1`
+    color:${Theme.color.counter.primary};
+    text-align: center;
+    font-size: 40px;
     
-    .counter-stop{
-        color: red;
+    ${props=>props.className==='counter-stop'&&css`
+        color: ${Theme.color.counter.error};
         font-weight: bold;
-    }
+    `}
 `
 
 

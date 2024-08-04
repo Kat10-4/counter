@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
+import {Theme} from '../../styles/Themes';
 
 type ButtonPropsType = {
     title: string,
@@ -18,17 +19,17 @@ export const Button = ({title, onClickHandler, disabled, classes}: ButtonPropsTy
 
 const StyledButton=styled.button`
     text-decoration: none;
-    border: 2px solid #9d9d9f;
+    border: 2px solid ${Theme.color.buttons};
     border-radius: 5px;
-    margin: 3px;
-    background-color: #545b5b;
+    margin: 5px 20px;
+    background-color: ${Theme.color.primaryBg};
     font-weight: bold;
     font-size: medium;
-    color: #9d9d9f;
+    color: ${Theme.color.buttons};
 
-    .active {
+    ${props => props.className === 'active' && css`
         text-decoration: none;
-        border-color: powderblue;
-        color: powderblue;
-        cursor: grab;
-    }`
+        border-color: ${Theme.color.accent};
+        color: ${Theme.color.accent};
+    `}
+`

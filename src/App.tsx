@@ -1,7 +1,10 @@
-import React, { useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {Counter} from './components/Counter/Counter';
 import styled from 'styled-components';
+import {StyledWrapper} from './components/StyledWrapper';
+import {ConditionalDesk} from './components/ConditionalDesk/ConditionalDesk';
+import GlobalStyles from './styles/Global.styles';
 
 
 function App() {
@@ -25,24 +28,18 @@ function App() {
     const isBtnDisabled = counter < stopCounter
 
     return (
-        <StyledWrapper>
-            <Counter/>
-            {/*<ConditionalDesk/>*/}
-        </StyledWrapper>
-    );
+        <div>
+            <GlobalStyles/>
+            <ConditionalDesk/>
+            <Counter
+                counter={counter}
+                stopCounter={stopCounter}
+                increaseCounter={increaseCounter}
+                isBtnDisabled={isBtnDisabled}
+                setRandValue={setRandValue}/>
+        </div>
+    )
+        ;
 }
-
-const StyledWrapper = styled.div`
-    margin: 10vw;
-    width: 140px;
-    height: 140px;
-    border: 2px solid powderblue;
-    background-color: #545b5b;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`
 
 export default App;
