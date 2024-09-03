@@ -9,9 +9,10 @@ type ConditionalDeskProps = {
     startValue:number
     changeMaxValue:(newVal:number)=>void
     changeStartValue:(newVal:number)=>void
+    isActive:boolean
 }
 
-export const SettingDesk = ({maxValue,startValue,changeStartValue,changeMaxValue}: ConditionalDeskProps) => {
+export const SettingDesk = ({maxValue,startValue,changeStartValue,changeMaxValue,isActive}: ConditionalDeskProps) => {
 
     const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
         changeMaxValue(+e.target.value)
@@ -50,7 +51,7 @@ export const SettingDesk = ({maxValue,startValue,changeStartValue,changeMaxValue
             </StyledWrapper>
             <StyledWrapper className={'bottom'}>
                 <Button title={'set'} onClickHandler={() => {
-                }} disabled={false} classes={'active'}/>
+                }} disabled={isActive} classes={isActive?'active':''}/>
             </StyledWrapper>
         </StyledWrapper>
     );

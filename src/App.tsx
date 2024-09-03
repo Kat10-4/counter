@@ -7,11 +7,27 @@ import GlobalStyles from './styles/Global.styles';
 
 function App() {
 
-    const [startValue,setStartValue]=useState<number> (2)
-    const [maxValue,setMaxValue]=useState<number> (5)
+    const [startValue, setStartValue] = useState<number>(2)
+    const [maxValue, setMaxValue] = useState<number>(5)
+
+    const [isActive, setIsActive] = useState<boolean>(false)//for settings desk
 
     const [counter, setCounter] = useState<number>(startValue)
 
+
+    //Settings logic
+    const changeMaxValue = (newVal: number) => {
+        setMaxValue(newVal)
+        setIsActive(true)
+    }
+
+    const changeStartValue = (newVal: number) => {
+        setStartValue(newVal)
+        setIsActive(true)
+    }
+
+
+    //Counter logic
     const increaseCounter = () => {
         if (counter < maxValue) {
             setCounter(counter + 1)
@@ -21,21 +37,23 @@ function App() {
     const resetCounter = () => setCounter(startValue)
 
 
-
     return (
         <div>
             <GlobalStyles/>
             <SettingDesk
                 maxValue={maxValue}
                 startValue={startValue}
-                changeMaxValue={(newVal)=>setMaxValue(newVal)}
-                changeStartValue={(newVal)=>setStartValue(newVal)}
+                changeMaxValue={changeMaxValue}
+                changeStartValue={changeStartValue}
+                isActive={isActive}
             />
             <Counter
                 counter={counter}
                 stopCounter={maxValue}
                 increaseCounter={increaseCounter}
-                resetCounter={resetCounter}/>
+                resetCounter={resetCounter}
+                isActive={isActive}
+            />
         </div>
     )
         ;
