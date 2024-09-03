@@ -17,7 +17,7 @@ export const Button = ({title, onClickHandler, disabled, classes}: ButtonPropsTy
     );
 };
 
-const StyledButton=styled.button`
+const StyledButton = styled.button`
     text-decoration: none;
     border: 2px solid ${Theme.color.buttons};
     border-radius: 5px;

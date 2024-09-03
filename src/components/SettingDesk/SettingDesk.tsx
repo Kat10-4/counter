@@ -1,18 +1,26 @@
-import React, {ChangeEvent,useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {StyledWrapper} from '../StyledWrapper';
 import {Button} from '../Button/Button';
 import styled from 'styled-components';
 import {Theme} from '../../styles/Themes';
 
 type ConditionalDeskProps = {
-    maxValue:number
-    startValue:number
-    changeMaxValue:(newVal:number)=>void
-    changeStartValue:(newVal:number)=>void
-    isActive:boolean
+    maxValue: number
+    startValue: number
+    changeMaxValue: (newVal: number) => void
+    changeStartValue: (newVal: number) => void
+    isActive: boolean
+    settingNewCounter: () => void
 }
 
-export const SettingDesk = ({maxValue,startValue,changeStartValue,changeMaxValue,isActive}: ConditionalDeskProps) => {
+export const SettingDesk = ({
+                                maxValue,
+                                startValue,
+                                changeStartValue,
+                                changeMaxValue,
+                                isActive,
+                                settingNewCounter
+                            }: ConditionalDeskProps) => {
 
     const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
         changeMaxValue(+e.target.value)
@@ -21,6 +29,9 @@ export const SettingDesk = ({maxValue,startValue,changeStartValue,changeMaxValue
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
         changeStartValue(+e.target.value)
     }
+
+    const onClickHandler=() => settingNewCounter()
+
 
 
     return (
@@ -50,8 +61,11 @@ export const SettingDesk = ({maxValue,startValue,changeStartValue,changeMaxValue
                 </form>
             </StyledWrapper>
             <StyledWrapper className={'bottom'}>
-                <Button title={'set'} onClickHandler={() => {
-                }} disabled={isActive} classes={isActive?'active':''}/>
+                <Button
+                    title={'set'}
+                    onClickHandler={onClickHandler}
+                    disabled={!isActive}
+                    classes={isActive ? 'active' : ''}/>
             </StyledWrapper>
         </StyledWrapper>
     );
