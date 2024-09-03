@@ -5,7 +5,7 @@ export const Theme = {
         accent: '#b0e0e6',
         counter: {
             primary: '#ea88d6',
-            error: '#ff0000'
+            error: '#ff0062'
         },
         buttons: '#9d9d9f'
     },

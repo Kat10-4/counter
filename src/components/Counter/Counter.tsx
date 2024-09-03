@@ -8,11 +8,11 @@ type CounterProps = {
     counter: number
     stopCounter: number
     increaseCounter: () => void
-    isBtnDisabled: boolean
-    setRandValue: () => void
+    resetCounter: () => void
 }
 
-export const Counter = ({counter, stopCounter, increaseCounter, isBtnDisabled, setRandValue}: CounterProps) => {
+export const Counter = ({counter, stopCounter, increaseCounter, resetCounter}: CounterProps) => {
+
     return (
         <StyledWrapper className={'main'}>
             <StyledWrapper className={'top'}>
@@ -24,13 +24,13 @@ export const Counter = ({counter, stopCounter, increaseCounter, isBtnDisabled, s
                     <Button
                         title={'inc'}
                         onClickHandler={increaseCounter}
-                        disabled={!isBtnDisabled}
-                        classes={!isBtnDisabled ? '' : 'active'}/>
+                        disabled={counter === stopCounter}
+                        classes={counter === stopCounter  ? '' : 'active'}/>
                     <Button
                         title={'reset'}
-                        onClickHandler={setRandValue}
-                        disabled={isBtnDisabled}
-                        classes={isBtnDisabled ? '' : 'active'}/>
+                        onClickHandler={resetCounter}
+                        disabled={false}
+                        classes={'active'}/>
                 </div>
             </StyledWrapper>
         </StyledWrapper>

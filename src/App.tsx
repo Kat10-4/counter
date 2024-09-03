@@ -1,42 +1,44 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Counter} from './components/Counter/Counter';
-import styled from 'styled-components';
-import {StyledWrapper} from './components/StyledWrapper';
-import {ConditionalDesk} from './components/ConditionalDesk/ConditionalDesk';
+import {SettingDesk} from './components/SettingDesk/SettingDesk';
 import GlobalStyles from './styles/Global.styles';
 
 
 function App() {
-    const startValue = 0
-    const stopValue = 5
+
+    let startValue: number = 2
+    let maxValue: number = 5
 
     const [counter, setCounter] = useState<number>(startValue)
-    const [stopCounter, setStopCounter] = useState<number>(stopValue)
 
     const increaseCounter = () => {
-        if (counter < stopCounter) {
+        if (counter < maxValue) {
             setCounter(counter + 1)
         }
     }
 
-    const setRandValue = () => {
-        setStopCounter(Math.round(Math.random() * 10 + 1))
+    const resetCounter = () => setCounter(startValue)
+
+    const setNewCounter = (newStart:number,newStop:number) => {
+        startValue=newStart
+        maxValue=newStop
         setCounter(startValue)
     }
-
-    const isBtnDisabled = counter < stopCounter
 
     return (
         <div>
             <GlobalStyles/>
-            <ConditionalDesk/>
+            <SettingDesk
+                startValue={startValue}
+                maxValue={maxValue}
+                setNewCounter={setNewCounter}
+            />
             <Counter
                 counter={counter}
-                stopCounter={stopCounter}
+                stopCounter={maxValue}
                 increaseCounter={increaseCounter}
-                isBtnDisabled={isBtnDisabled}
-                setRandValue={setRandValue}/>
+                resetCounter={resetCounter}/>
         </div>
     )
         ;
