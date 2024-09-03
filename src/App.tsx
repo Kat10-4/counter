@@ -7,8 +7,8 @@ import GlobalStyles from './styles/Global.styles';
 
 function App() {
 
-    let startValue: number = 2
-    let maxValue: number = 5
+    const [startValue,setStartValue]=useState<number> (2)
+    const [maxValue,setMaxValue]=useState<number> (5)
 
     const [counter, setCounter] = useState<number>(startValue)
 
@@ -20,19 +20,16 @@ function App() {
 
     const resetCounter = () => setCounter(startValue)
 
-    const setNewCounter = (newStart:number,newStop:number) => {
-        startValue=newStart
-        maxValue=newStop
-        setCounter(startValue)
-    }
+
 
     return (
         <div>
             <GlobalStyles/>
             <SettingDesk
-                startValue={startValue}
                 maxValue={maxValue}
-                setNewCounter={setNewCounter}
+                startValue={startValue}
+                changeMaxValue={(newVal)=>setMaxValue(newVal)}
+                changeStartValue={(newVal)=>setStartValue(newVal)}
             />
             <Counter
                 counter={counter}

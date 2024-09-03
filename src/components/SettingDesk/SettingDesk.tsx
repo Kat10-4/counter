@@ -1,20 +1,24 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent,useState} from 'react';
 import {StyledWrapper} from '../StyledWrapper';
 import {Button} from '../Button/Button';
 import styled from 'styled-components';
 import {Theme} from '../../styles/Themes';
 
 type ConditionalDeskProps = {
-    startValue:number
     maxValue:number
-    setNewCounter:(newStart:number,newStop:number)=>void
+    startValue:number
+    changeMaxValue:(newVal:number)=>void
+    changeStartValue:(newVal:number)=>void
 }
 
-export const SettingDesk = ({startValue,maxValue,setNewCounter}: ConditionalDeskProps) => {
+export const SettingDesk = ({maxValue,startValue,changeStartValue,changeMaxValue}: ConditionalDeskProps) => {
 
+    const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
+        changeMaxValue(+e.target.value)
+    }
 
-    const setNewValuesHandler = () => {
-
+    const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
+        changeStartValue(+e.target.value)
     }
 
 
@@ -29,6 +33,7 @@ export const SettingDesk = ({startValue,maxValue,setNewCounter}: ConditionalDesk
                             type={'number'}
                             name={'max_value'}
                             value={maxValue}
+                            onChange={onChangeMaxValue}
                         />
                     </StyledFieldset>
                     <StyledFieldset>
@@ -38,12 +43,14 @@ export const SettingDesk = ({startValue,maxValue,setNewCounter}: ConditionalDesk
                             type={'number'}
                             name={'start_value'}
                             value={startValue}
+                            onChange={onChangeStartValue}
                         />
                     </StyledFieldset>
                 </form>
             </StyledWrapper>
             <StyledWrapper className={'bottom'}>
-                <Button title={'set'} onClickHandler={setNewValuesHandler} disabled={false} classes={'active'}/>
+                <Button title={'set'} onClickHandler={() => {
+                }} disabled={false} classes={'active'}/>
             </StyledWrapper>
         </StyledWrapper>
     );
