@@ -3,7 +3,6 @@ import './App.css';
 import {Counter} from './components/Counter/Counter';
 import {SettingDesk} from './components/SettingDesk/SettingDesk';
 import GlobalStyles from './styles/Global.styles';
-import {start} from 'node:repl';
 
 
 function App() {
@@ -16,7 +15,7 @@ function App() {
 
     const [isActive, setIsActive] = useState<boolean>(false)//for setting desk
 
-    const [error, setError] = useState<boolean>(true)//error for setting desk
+    const [error, setError] = useState<boolean>(false)//error for setting desk
 
 
     //Local Storage
@@ -41,11 +40,21 @@ function App() {
 
     //Settings logic
     const changeMaxValue = (newVal: number) => {
-        setMaxValue(newVal)
+        if(newVal<0 || newVal===startValue){
+            setError(true)
+        }else{
+            setError(false)
+        }
         setIsActive(true)
+        setMaxValue(newVal)
     }
 
     const changeStartValue = (newVal: number) => {
+        if(newVal<0 || newVal===maxValue){
+            setError(true)
+        }else{
+            setError(false)
+        }
         setStartValue(newVal)
         setIsActive(true)
     }
@@ -65,6 +74,8 @@ function App() {
         resetCounter()
     }
 
+
+
     return (
         <div>
             <GlobalStyles/>
@@ -75,7 +86,6 @@ function App() {
                 changeStartValue={changeStartValue}
                 isActive={isActive}
                 settingNewCounter={settingNewCounter}
-
             />
             <Counter
                 counter={counter}
