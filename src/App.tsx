@@ -4,92 +4,72 @@ import {Counter} from './components/Counter/Counter';
 import {SettingDesk} from './components/SettingDesk/SettingDesk';
 import GlobalStyles from './styles/Global.styles';
 
+export type ValuesTypes = {
+    max: number
+    start: number
+}
 
 function App() {
+    const [values, setValues] = useState<ValuesTypes>({max: 5, start: 0});
 
-    const [startValue, setStartValue] = useState<number>(0)
-
-    const [maxValue, setMaxValue] = useState<number>(5)
-
-    const [counter, setCounter] = useState<number>(startValue)
+    const [counter, setCounter] = useState<number>(values.start)
 
     const [isActive, setIsActive] = useState<boolean>(false)//for setting desk
 
-    const [error, setError] = useState<boolean>(false)//error for setting desk
-
+    const [error, setError] = useState<boolean>(false)
 
     //Local Storage
-    const startValueKey = 'start value'
-    const maxValueKey = 'max value'
+    const valuesKey = 'start value'
 
     useEffect(() => {
-        const start = localStorage.getItem(startValueKey)
-        const max = localStorage.getItem(maxValueKey)
-        if (start && max) {
-            setStartValue(JSON.parse(start))
-            setCounter(JSON.parse(start))
-            setMaxValue(JSON.parse(max))
+        const storeValues = localStorage.getItem(valuesKey)
+
+        if (storeValues) {
+            const values = JSON.parse(storeValues)
+            setValues(values)
+            setCounter(values.start)
         }
     }, [])
 
     useEffect(() => {
-        localStorage.setItem(startValueKey, JSON.stringify(startValue))
-        localStorage.setItem(maxValueKey, JSON.stringify(maxValue))
-    }, [startValue, maxValue])
-
-
-    //Settings logic
-    const changeMaxValue = (newVal: number) => {
-        if(newVal<0 || newVal===startValue){
-            setError(true)
-        }else{
-            setError(false)
+        if (!error) {
+            localStorage.setItem(valuesKey, JSON.stringify(values))
         }
-        setIsActive(true)
-        setMaxValue(newVal)
+    }, [values])
+
+
+//bizz logic
+    const settingNewCounter = () => {
+        setIsActive(false)
+        setCounter(values.start)
     }
 
-    const changeStartValue = (newVal: number) => {
-        if(newVal<0 || newVal===maxValue){
-            setError(true)
-        }else{
-            setError(false)
-        }
-        setStartValue(newVal)
-        setIsActive(true)
-    }
-
-
-    //Counter logic
     const increaseCounter = () => {
-        if (counter < maxValue) {
+        if (counter < values.max) {
             setCounter(counter + 1)
         }
     }
 
-    const resetCounter = () => setCounter(startValue)
-
-    const settingNewCounter = () => {
-        setIsActive(false)
-        resetCounter()
+    const resetCounter = () => {
+        console.log(values.start)
+        setCounter(values.start)
     }
-
 
 
     return (
         <div>
             <GlobalStyles/>
             <SettingDesk
-                maxValue={maxValue}
-                startValue={startValue}
-                changeMaxValue={changeMaxValue}
-                changeStartValue={changeStartValue}
+                values={values}
+                setValues={setValues}
                 isActive={isActive}
+                setIsActive={setIsActive}
                 settingNewCounter={settingNewCounter}
+                setError={setError}
             />
             <Counter
                 counter={counter}
-                stopCounter={maxValue}
+                stopCounter={values.max}
                 increaseCounter={increaseCounter}
                 resetCounter={resetCounter}
                 isActive={isActive}

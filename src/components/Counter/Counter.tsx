@@ -16,7 +16,6 @@ type CounterProps = {
 }
 
 export const Counter = ({counter, stopCounter, increaseCounter, resetCounter, isActive, error}: CounterProps) => {
-
     return (
         <StyledWrapper className={'main'}>
             <StyledWrapper className={'top'}>
@@ -45,8 +44,8 @@ export const Counter = ({counter, stopCounter, increaseCounter, resetCounter, is
     );
 };
 
-const StyledMessage = styled.p<{error:boolean}>`
-    color: ${props => props.error ? Theme.color.counter.error:Theme.color.accent};
+const StyledMessage = styled.p<{ error: boolean }>`
+    color: ${props => props.error ? Theme.color.counter.error : Theme.color.accent};
     text-align: center;
     font-size: 16px;
     font-weight: bold;
