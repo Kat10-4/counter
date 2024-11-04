@@ -35,7 +35,7 @@ function App() {
         if (!error) {
             localStorage.setItem(valuesKey, JSON.stringify(values))
         }
-    }, [values])
+    }, [values,error])
 
 
 //bizz logic
@@ -51,7 +51,6 @@ function App() {
     }
 
     const resetCounter = () => {
-        console.log(values.start)
         setCounter(values.start)
     }
 
