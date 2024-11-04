@@ -5,7 +5,7 @@ export default createGlobalStyle`
     * {
         background-color: ${Theme.color.primaryBg};
         box-sizing: border-box;
-        font-family: ${Theme.font}
+        font-family: ${Theme.font};
     }
 `
 
