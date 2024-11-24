@@ -1,16 +1,17 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {Theme} from '../../styles/Themes';
+import {useStore} from '../../  app/store';
 
-type TrackerProps = {
-    currentVal: number,
-    stopVal: number
-};
 
-export const Tracker = ({currentVal, stopVal}: TrackerProps) => {
+export const Tracker = () => {
+
+    let counter = useStore((state) => state.counter);
+    let values = useStore((state) => state.values);
+
     return (
         <StyledTracker>
-            <StyledTrackerLine style={{width: `calc(${currentVal}/${stopVal}*100%)`}}></StyledTrackerLine>
+            <StyledTrackerLine style={{width: `calc(${counter}/${values.max}*100%)`}}></StyledTrackerLine>
         </StyledTracker>
     );
 };

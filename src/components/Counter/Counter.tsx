@@ -16,17 +16,19 @@ export const Counter = () => {
     const increaseCounter = useStore((state) => state.increaseCounter)
     const resetCounter = useStore((state)=>state.resetCounter)
 
+    const isError=error.max || error.start||error.comparison
+
     return (
         <StyledWrapper className={'main'}>
             <StyledWrapper className={'top'}>
                 {isActive ?
-                    <StyledMessage error={error}>
-                        {error ? 'Incorrect value!' : 'Enter value and press \'set\''}
+                    <StyledMessage $error={isError}>
+                        {isError ? 'Incorrect value!' : 'Enter value and press \'set\''}
                     </StyledMessage>
-                    : <Number counter={counter} stopVal={values.max}/>}
+                    : <Number/>}
             </StyledWrapper>
             <StyledWrapper className={'bottom'}>
-                {!isActive && <Tracker currentVal={counter} stopVal={values.max}/>}
+                {!isActive && <Tracker/>}
                 <div>
                     <Button
                         title={'inc'}
@@ -44,8 +46,8 @@ export const Counter = () => {
     );
 };
 
-const StyledMessage = styled.p<{ error: boolean }>`
-    color: ${props => props.error ? Theme.color.counter.error : Theme.color.accent};
+const StyledMessage = styled.p<{ $error: boolean }>`
+    color: ${props => (props.$error ? Theme.color.counter.error : Theme.color.accent)};
     text-align: center;
     font-size: 16px;
     font-weight: bold;

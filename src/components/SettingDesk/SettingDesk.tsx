@@ -1,27 +1,23 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent} from 'react';
 import { StyledWrapper } from '../StyledWrapper';
 import { Button } from '../Button/Button';
 import styled from 'styled-components';
 import { Theme } from '../../styles/Themes';
-import {useStore, ValuesTypes} from '../../  app/store';
+import {ErrorsTypes, useStore, ValuesTypes} from '../../  app/store';
 
-
-type ErrorsTypes = {
-    [key: string]: boolean;
-};
 
 export const SettingDesk = () => {
 
     let values = useStore((state) => state.values);
+    let error = useStore((state) => state.error);
     let isActive = useStore((state) => state.isActive);
     const setValues = useStore((state) => state.setValues);
     const setError = useStore((state) => state.setError);
     const setIsActive=useStore((state)=>state.setIsActive)
     const setNewCounter=useStore((state)=>state.setNewCounter)
 
-
-    const [errors, setErrors] = useState<ErrorsTypes>(
-        { max: false, start: false, comparison: false });
+    const isError=error.max || error.start || error.comparison
+    const isButtonActive= !isError && isActive
 
     const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setIsActive(true);
@@ -30,28 +26,20 @@ export const SettingDesk = () => {
         const newValue = parseInt(value);
 
         const newValues: ValuesTypes = { ...values, [name]: newValue };
-        const newErrors: ErrorsTypes = { ...errors };
+        const newErrors: ErrorsTypes = { ...error };
 
-        newValue < 0 ? (newErrors[name] = true) : (newErrors[name] = false);
-
-        newValues.max <= newValues.start ? (newErrors.comparison = true) : (newErrors.comparison = false);
+        newErrors[name] = newValue < 0;
+        newErrors.comparison = newValues.max <= newValues.start;
 
         setValues(newValues);
-        setErrors(newErrors);
-        setErrorMessage(newErrors);
+        setError(newErrors);
     };
 
-    const setErrorMessage = (errors: ErrorsTypes) => {
-        if (errors.max || errors.start || errors.comparison) {
-            setError(true);
-        } else {
-            setError(false);
-        }
-    };
 
     const onClickHandler = () => {
         setNewCounter();
     };
+
 
     return (
         <StyledWrapper className={'main'}>
@@ -65,7 +53,7 @@ export const SettingDesk = () => {
                             name={'max'}
                             value={values.max}
                             onChange={inputChangeHandler}
-                            $error={errors.max || errors.comparison}
+                            $error={error.max || error.comparison}
                         />
                     </StyledFieldset>
                     <StyledFieldset>
@@ -76,7 +64,7 @@ export const SettingDesk = () => {
                             name={'start'}
                             value={values.start}
                             onChange={inputChangeHandler}
-                            $error={errors.start || errors.comparison}
+                            $error={error.start || error.comparison}
                         />
                     </StyledFieldset>
                 </form>
@@ -85,8 +73,8 @@ export const SettingDesk = () => {
                 <Button
                     title={'set'}
                     onClickHandler={onClickHandler}
-                    disabled={!isActive || errors.max || errors.start || errors.comparison}
-                    classes={isActive && !errors.max && !errors.start && !errors.comparison ? 'active' : ''}
+                    disabled={!isActive || isError}
+                    classes={isButtonActive ? 'active' : ''}
                 />
             </StyledWrapper>
         </StyledWrapper>

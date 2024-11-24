@@ -6,15 +6,19 @@ export type ValuesTypes = {
     start: number;
 };
 
+export type ErrorsTypes = {
+    [key: string]: boolean;
+};
+
 type CounterState = {
     counter: number;
     values: ValuesTypes;
     isActive: boolean;
-    error: boolean;
+    error: ErrorsTypes;
     setValues: (values: { start: number; max: number }) => void;
     setCounter: (counter: number) => void;
     setIsActive: (isActive: boolean) => void;
-    setError: (error: boolean) => void;
+    setError: (error: ErrorsTypes) => void;
     setNewCounter: () => void;
     increaseCounter: () => void;
     resetCounter: () => void;
@@ -42,7 +46,7 @@ export const useStore = create<CounterState>()(
                 max: 5,
             },
             isActive: false,
-            error: false,
+            error: { max: false, start: false, comparison: false },
             setValues: (values) => set(() => ({ values, counter: values.start })),
             setCounter: (counter) => set(() => ({ counter })),
             setIsActive: (isActive) => set(() => ({ isActive })),
@@ -63,7 +67,7 @@ export const useStore = create<CounterState>()(
                 set((state) => ({
                     counter: state.values.start,
                     isActive: false,
-                    error: false,
+                    error:{max:false,start:false,comparison:false}
                 })),
         }),
         {

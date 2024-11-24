@@ -7,7 +7,7 @@ import GlobalStyles from '../styles/Global.styles';
 
 function App() {
     return (
-        <div style={{display: 'flex', gap: '20px'}}>
+        <div style={{display: 'flex', gap: '20px', flexWrap:'wrap', justifyContent:'center'}}>
             <GlobalStyles/>
             <SettingDesk/>
             <Counter/>
