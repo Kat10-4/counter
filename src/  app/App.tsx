@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Counter} from '../components/Counter/Counter';
 import {SettingDesk} from '../components/SettingDesk/SettingDesk';
 import GlobalStyles from '../styles/Global.styles';
+import {useStore} from 'zustand';
+
+
+
 
 export type ValuesTypes = {
     max: number
@@ -10,13 +14,13 @@ export type ValuesTypes = {
 }
 
 function App() {
-    const [values, setValues] = useState<ValuesTypes>({max: 5, start: 0});
-
-    const [counter, setCounter] = useState<number>(values.start)
-
-    const [isActive, setIsActive] = useState<boolean>(false)//for setting desk
-
-    const [error, setError] = useState<boolean>(false)
+    const counter = useStore((state) => state.counter);
+    const values = useStore((state) => state.values);
+    const isActive = useStore((state) => state.isActive);
+    const error = useStore((state) => state.error);
+    const setNewCounter = useStore((state) => state.setNewCounter);
+    const increaseCounter = useStore((state) => state.increaseCounter);
+    const resetCounter = useStore((state) => state.resetCounter);
 
     //Local Storage
     const valuesKey = 'start value'
@@ -36,23 +40,6 @@ function App() {
             localStorage.setItem(valuesKey, JSON.stringify(values))
         }
     }, [values,error])
-
-
-//bizz logic
-    const settingNewCounter = () => {
-        setIsActive(false)
-        setCounter(values.start)
-    }
-
-    const increaseCounter = () => {
-        if (counter < values.max) {
-            setCounter(counter + 1)
-        }
-    }
-
-    const resetCounter = () => {
-        setCounter(values.start)
-    }
 
 
     return (
