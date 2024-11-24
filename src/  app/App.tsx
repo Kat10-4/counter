@@ -3,24 +3,14 @@ import './App.css';
 import {Counter} from '../components/Counter/Counter';
 import {SettingDesk} from '../components/SettingDesk/SettingDesk';
 import GlobalStyles from '../styles/Global.styles';
-import {useStore} from 'zustand';
+import {useStore} from './store';
 
-
-
-
-export type ValuesTypes = {
-    max: number
-    start: number
-}
 
 function App() {
-    const counter = useStore((state) => state.counter);
-    const values = useStore((state) => state.values);
-    const isActive = useStore((state) => state.isActive);
-    const error = useStore((state) => state.error);
-    const setNewCounter = useStore((state) => state.setNewCounter);
-    const increaseCounter = useStore((state) => state.increaseCounter);
-    const resetCounter = useStore((state) => state.resetCounter);
+    let values = useStore((state) => state.values);
+    let error = useStore((state) => state.error);
+    const setValues = useStore((state) => state.setValues)
+    const setCounter = useStore((state)=>state.setCounter)
 
     //Local Storage
     const valuesKey = 'start value'
@@ -29,9 +19,9 @@ function App() {
         const storeValues = localStorage.getItem(valuesKey)
 
         if (storeValues) {
-            const values = JSON.parse(storeValues)
-            setValues(values)
-            setCounter(values.start)
+            const receivedValues = JSON.parse(storeValues)
+            setValues(receivedValues)
+            setCounter(receivedValues.start)
         }
     }, [])
 
@@ -39,28 +29,14 @@ function App() {
         if (!error) {
             localStorage.setItem(valuesKey, JSON.stringify(values))
         }
-    }, [values,error])
+    }, [values, error])
 
 
     return (
-        <div style={{display:'flex',gap:'20px'}}>
+        <div style={{display: 'flex', gap: '20px'}}>
             <GlobalStyles/>
-            <SettingDesk
-                values={values}
-                setValues={setValues}
-                isActive={isActive}
-                setIsActive={setIsActive}
-                settingNewCounter={settingNewCounter}
-                setError={setError}
-            />
-            <Counter
-                counter={counter}
-                stopCounter={values.max}
-                increaseCounter={increaseCounter}
-                resetCounter={resetCounter}
-                isActive={isActive}
-                error={error}
-            />
+            <SettingDesk/>
+            <Counter/>
         </div>
     )
         ;

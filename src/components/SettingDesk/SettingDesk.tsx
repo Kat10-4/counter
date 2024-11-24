@@ -3,30 +3,25 @@ import { StyledWrapper } from '../StyledWrapper';
 import { Button } from '../Button/Button';
 import styled from 'styled-components';
 import { Theme } from '../../styles/Themes';
-import { ValuesTypes } from '../../  app/App';
+import {useStore, ValuesTypes} from '../../  app/store';
 
-type ConditionalDeskProps = {
-    values: ValuesTypes;
-    setValues: (values: ValuesTypes) => void;
-    isActive: boolean;
-    setIsActive: (value: boolean) => void;
-    settingNewCounter: () => void;
-    setError: (value: boolean) => void;
-};
 
 type ErrorsTypes = {
     [key: string]: boolean;
 };
 
-export const SettingDesk = ({
-                                values,
-                                setValues,
-                                isActive,
-                                setIsActive,
-                                settingNewCounter,
-                                setError,
-                            }: ConditionalDeskProps) => {
-    const [errors, setErrors] = useState<ErrorsTypes>({ max: false, start: false, comparison: false });
+export const SettingDesk = () => {
+
+    let values = useStore((state) => state.values);
+    let isActive = useStore((state) => state.isActive);
+    const setValues = useStore((state) => state.setValues);
+    const setError = useStore((state) => state.setError);
+    const setIsActive=useStore((state)=>state.setIsActive)
+    const setNewCounter=useStore((state)=>state.setNewCounter)
+
+
+    const [errors, setErrors] = useState<ErrorsTypes>(
+        { max: false, start: false, comparison: false });
 
     const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setIsActive(true);
@@ -55,7 +50,7 @@ export const SettingDesk = ({
     };
 
     const onClickHandler = () => {
-        settingNewCounter();
+        setNewCounter();
     };
 
     return (

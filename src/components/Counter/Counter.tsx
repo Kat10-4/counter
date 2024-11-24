@@ -5,17 +5,17 @@ import {Button} from '../Button/Button';
 import {StyledWrapper} from '../StyledWrapper';
 import styled from 'styled-components';
 import {Theme} from '../../styles/Themes';
+import {useStore} from '../../  app/store';
 
-type CounterProps = {
-    counter: number
-    stopCounter: number
-    increaseCounter: () => void
-    resetCounter: () => void
-    isActive: boolean
-    error: boolean
-}
+export const Counter = () => {
 
-export const Counter = ({counter, stopCounter, increaseCounter, resetCounter, isActive, error}: CounterProps) => {
+    let counter = useStore((state) => state.counter);
+    let values = useStore((state) => state.values);
+    let isActive = useStore((state) => state.isActive);
+    let error = useStore((state) => state.error);
+    const increaseCounter = useStore((state) => state.increaseCounter)
+    const resetCounter = useStore((state)=>state.resetCounter)
+
     return (
         <StyledWrapper className={'main'}>
             <StyledWrapper className={'top'}>
@@ -23,16 +23,16 @@ export const Counter = ({counter, stopCounter, increaseCounter, resetCounter, is
                     <StyledMessage error={error}>
                         {error ? 'Incorrect value!' : 'Enter value and press \'set\''}
                     </StyledMessage>
-                    : <Number counter={counter} stopVal={stopCounter}/>}
+                    : <Number counter={counter} stopVal={values.max}/>}
             </StyledWrapper>
             <StyledWrapper className={'bottom'}>
-                {!isActive && <Tracker currentVal={counter} stopVal={stopCounter}/>}
+                {!isActive && <Tracker currentVal={counter} stopVal={values.max}/>}
                 <div>
                     <Button
                         title={'inc'}
                         onClickHandler={increaseCounter}
-                        disabled={isActive || counter === stopCounter}
-                        classes={isActive || counter === stopCounter ? '' : 'active'}/>
+                        disabled={isActive || counter === values.max}
+                        classes={isActive || counter === values.max ? '' : 'active'}/>
                     <Button
                         title={'reset'}
                         onClickHandler={resetCounter}
