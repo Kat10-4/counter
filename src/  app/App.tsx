@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {Counter} from './components/Counter/Counter';
-import {SettingDesk} from './components/SettingDesk/SettingDesk';
-import GlobalStyles from './styles/Global.styles';
+import {Counter} from '../components/Counter/Counter';
+import {SettingDesk} from '../components/SettingDesk/SettingDesk';
+import GlobalStyles from '../styles/Global.styles';
 
 export type ValuesTypes = {
     max: number

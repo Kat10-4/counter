@@ -3,7 +3,7 @@ import { StyledWrapper } from '../StyledWrapper';
 import { Button } from '../Button/Button';
 import styled from 'styled-components';
 import { Theme } from '../../styles/Themes';
-import { ValuesTypes } from '../../App';
+import { ValuesTypes } from '../../  app/App';
 
 type ConditionalDeskProps = {
     values: ValuesTypes;
