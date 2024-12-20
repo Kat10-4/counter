@@ -56,7 +56,7 @@ function App() {
 
 
     return (
-        <div style={{display:'flex',gap:'20px'}}>
+        <div className='app-container'>
             <GlobalStyles/>
             <SettingDesk
                 values={values}
