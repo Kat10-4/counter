@@ -10,7 +10,7 @@ type CounterTypes = {
     error: boolean,
 }
 
-const initialState: CounterTypes = {
+export const initialState: CounterTypes = {
     values: {max: 5, start: 0},
     counter: 0,
     isActive: false,
